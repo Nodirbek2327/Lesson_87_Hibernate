@@ -2,6 +2,8 @@ package org.example.Library.service;
 
 import org.example.Library.Entity.BookEntity;
 import org.example.Library.Entity.CategoryEntity;
+import org.example.Library.Entity.ProfileEntity;
+import org.example.Library.Entity.TakenBooks;
 import org.example.Library.enums.BookStatus;
 import org.example.Library.mapper.BestsellerMapper;
 import org.example.Library.mapper.BookMapper;
@@ -148,8 +150,55 @@ public class AdminService {
     }
 
     public void blockStudent(Integer id) {
+        if (adminRepository.blockStudent(id)>0){
+            System.out.println("blocked successfully");
+            return;
+        }
+        System.out.println("student not found");
+    }
 
+    public void activateStudent(Integer id) {
+        if (adminRepository.activateStudent(id)>0){
+            System.out.println("activate student successfully");
+            return;
+        }
+        System.out.println("student not found");
+    }
 
+    public void takeBook(ProfileEntity profileEntity, String name) {
+        List<BookEntity> list = adminRepository.takeBook(profileEntity, name);
+        if (list.isEmpty()){
+            System.out.println("book not found");
+            return;
+        }
+        if(adminRepository.addTakenBook(profileEntity, list.get(0))){
+            System.out.println("book is taken");
+            return;
+        };
+        System.out.println("wrong");
+    }
+
+    public void returnBook(ProfileEntity profileEntity, Integer id) {
+        List<TakenBooks> list = adminRepository.returnBook(profileEntity, id);
+        if (list.isEmpty()){
+            System.out.println("TakenBook not found");
+            return;
+        }
+        if(adminRepository.returnTakenBook(profileEntity, list.get(0))){
+            System.out.println("book is returned");
+            return;
+        };
+        System.out.println("wrong");
+    }
+
+    public void booksOnStudent(ProfileEntity profileEntity) {
+        List<BookMapper> list = adminRepository.booksOnStudent(profileEntity);
+        if (list.isEmpty()){
+            System.out.println("There is no books on your hand");
+            return;
+        }
+        System.out.println("*********************** Books on your Hand *********************** \n");
+        list.forEach(System.out::println);
     }
 }
 

@@ -4,7 +4,6 @@ import lombok.Setter;
 import org.example.Library.Entity.ProfileEntity;
 import org.example.Library.container.ComponentContainer;
 import org.example.Library.service.AdminService;
-import org.example.Library.service.ProfileService;
 import org.example.Library.util.GetAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,9 +33,13 @@ public class AdminStudentController {
     }
 
     private void studentByBook() {
+
     }
 
     private void activateStudent() {
+        System.out.println("Enter id: ");
+        Integer id = ComponentContainer.intScanner.nextInt();
+        adminService.activateStudent(id);
     }
 
     private void blockStudent() {

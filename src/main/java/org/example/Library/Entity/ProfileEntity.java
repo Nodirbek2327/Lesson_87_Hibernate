@@ -32,6 +32,8 @@ public class ProfileEntity {
     @Enumerated(EnumType.STRING)
     private ProfileRoles role;
     private LocalDateTime created_date;
+    @OneToOne(mappedBy = "profileLib")
+    private TakenBooks takenBooks;
 
     @Override
     public String toString() {

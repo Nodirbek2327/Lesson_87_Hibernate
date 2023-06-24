@@ -27,4 +27,6 @@ public class BookEntity {
     @Enumerated(EnumType.STRING)
     private BookStatus visible;
     private LocalDateTime created_date;
+    @OneToOne(mappedBy = "profileLib")
+    private TakenBooks takenBooks;
 }
