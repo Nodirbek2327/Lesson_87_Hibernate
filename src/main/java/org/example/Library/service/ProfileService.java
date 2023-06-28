@@ -9,11 +9,15 @@ import org.example.Library.controller.AdminController;
 import org.example.Library.controller.StudentController;
 import org.example.Library.enums.ProfileRoles;
 import org.example.Library.enums.ProfileStatus;
+import org.example.Library.exp.AppBadRequestException;
+import org.example.Library.exp.ItemNotFoundException;
 import org.example.Library.mapper.BookMapper;
 import org.example.Library.mapper.CategoryMapper;
 import org.example.Library.repository.ProfileRepository;
 import org.example.Library.util.PhoneValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -36,14 +40,16 @@ public class ProfileService {
         String phone = profileEntity.getPhone();
         // validate phone
         if (!PhoneValidationUtil.isValidPhone(phone)) {
-            System.out.println("This phone is invalid");
-            return;
+           System.out.println("This phone is invalid");
+           return;
+          //  throw new AppBadRequestException("This phone is invalid");
         }
         // check phone unique
         ProfileEntity existProfile = profileRepository.getProfileByPhone(phone);
         if (existProfile != null) {
             System.out.println("This phone is already registered");
             return;
+          //  throw new ItemNotFoundException("This phone is already registered");
         }
         boolean result = profileRepository.addProfile(profileEntity);
         if (result) {
@@ -51,6 +57,7 @@ public class ProfileService {
             System.out.println("Login to your account!");
         } else {
             System.out.println("Something went wrong");
+           // throw new AppBadRequestException("Something went wrong");
         }
     }
 

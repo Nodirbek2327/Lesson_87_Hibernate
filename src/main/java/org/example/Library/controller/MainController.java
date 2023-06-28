@@ -8,6 +8,7 @@ import org.example.Library.enums.ProfileStatus;
 import org.example.Library.service.ProfileService;
 import org.example.Library.util.GetAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
