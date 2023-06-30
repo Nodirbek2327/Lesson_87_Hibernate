@@ -7,6 +7,7 @@ import org.example.Library.service.AdminService;
 import org.example.Library.service.ProfileService;
 import org.example.Library.util.GetAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -31,20 +32,23 @@ public class AdminProfileController {
         }
     }
 
-    private void changeStatus() {
+    private ResponseEntity<String> changeStatus() {
         System.out.println("Enter id: ");
         Integer id = ComponentContainer.intScanner.nextInt();
-        adminService.changeStatus(id);
+        return ResponseEntity.ok(adminService.changeStatus(id));
+       // adminService.changeStatus(id);
     }
 
-    private void searchProfile() {
+    private ResponseEntity<?> searchProfile() {
         System.out.println("Enter something to search: ");
         String data = ComponentContainer.stringScanner.nextLine();
-        adminService.searchProfile(data);
+        return ResponseEntity.ok(adminService.searchProfile(data));
+       // adminService.searchProfile(data);
     }
 
-    private void profileList() {
-        adminService.profileList();
+    private ResponseEntity<?> profileList() {
+        return ResponseEntity.ok(adminService.profileList());
+       // adminService.profileList();
     }
 
     public void show(){

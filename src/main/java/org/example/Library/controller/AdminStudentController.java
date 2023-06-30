@@ -6,6 +6,7 @@ import org.example.Library.container.ComponentContainer;
 import org.example.Library.service.AdminService;
 import org.example.Library.util.GetAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -36,26 +37,30 @@ public class AdminStudentController {
 
     }
 
-    private void activateStudent() {
+    private ResponseEntity<String> activateStudent() {
         System.out.println("Enter id: ");
         Integer id = ComponentContainer.intScanner.nextInt();
-        adminService.activateStudent(id);
+        return ResponseEntity.ok(adminService.activateStudent(id));
+       // adminService.activateStudent(id);
     }
 
-    private void blockStudent() {
+    private ResponseEntity<String> blockStudent() {
         System.out.println("Enter id: ");
         Integer id = ComponentContainer.intScanner.nextInt();
-        adminService.blockStudent(id);
+        return ResponseEntity.ok(adminService.blockStudent(id));
+      //  adminService.blockStudent(id);
     }
 
-    private void searchStudent() {
+    private ResponseEntity<?> searchStudent() {
         System.out.println("Enter something to search: ");
         String data = ComponentContainer.stringScanner.nextLine();
-        adminService.searchStudent(data);
+        return ResponseEntity.ok(adminService.searchStudent(data));
+       // adminService.searchStudent(data);
     }
 
-    private void profileList() {
-        adminService.studentList();
+    private ResponseEntity<?> profileList() {
+        return ResponseEntity.ok(adminService.studentList());
+        //adminService.studentList();
     }
 
     public void show(){

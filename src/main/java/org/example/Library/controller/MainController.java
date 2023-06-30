@@ -5,6 +5,7 @@ import org.example.Library.Entity.ProfileEntity;
 import org.example.Library.container.ComponentContainer;
 import org.example.Library.enums.ProfileRoles;
 import org.example.Library.enums.ProfileStatus;
+import org.example.Library.mapper.BookMapper;
 import org.example.Library.service.ProfileService;
 import org.example.Library.util.GetAction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class MainController {
         }
     }
 
-    public void registrationAdmin(){
+    public ResponseEntity<String> registrationAdmin(){
         ProfileEntity profileEntity= new ProfileEntity();
         profileEntity.setName("Nodirbek");
         profileEntity.setSurname("Hasanov");
@@ -48,28 +49,30 @@ public class MainController {
         profileEntity.setRole(ProfileRoles.ADMIN);
         profileEntity.setStatus(ProfileStatus.ACTIVE);
 
-        profileService.register(profileEntity);
+        return ResponseEntity.ok(profileService.register(profileEntity));
+//        profileService.register(profileEntity);
     }
 
 
-    private void categories() {
+    private ResponseEntity<?> categories() {
         profileService.categories();
         System.out.println("Enter category: ");
         String category = ComponentContainer.stringScanner.nextLine();
-        profileService.searchBooks(category);
+       // profileService.searchBooks(category);
+        return ResponseEntity.ok(profileService.searchBooks(category));
     }
 
-    private void searchBook() {
+    private ResponseEntity<?> searchBook() {
         System.out.println("Enter something to search: ");
         String data = ComponentContainer.stringScanner.nextLine();
-        profileService.search(data);
+        return ResponseEntity.ok(profileService.search(data));
     }
 
-    private void bookList() {
-        profileService.bookList();
+    private ResponseEntity<?> bookList() {
+        return ResponseEntity.ok(profileService.bookList());
     }
 
-    public void registration(){
+    public ResponseEntity<String> registration(){
         System.out.println("Enter your name: ");
         String name= ComponentContainer.stringScanner.nextLine();
         System.out.println("Enter your surname:");
@@ -91,15 +94,17 @@ public class MainController {
         profileEntity.setRole(ProfileRoles.STUDENT);
         profileEntity.setStatus(ProfileStatus.NOT_ACTIVE);
 
-        profileService.register(profileEntity);
+        return ResponseEntity.ok(profileService.register(profileEntity));
+    //    profileService.register(profileEntity);
     }
 
-    public void login(){
+    public ResponseEntity<String> login(){
         System.out.println("Enter your login: ");
         String login=ComponentContainer.stringScanner.nextLine();
         System.out.println("Enter your password");
         String password=ComponentContainer.stringScanner.nextLine();
-        profileService.login(login, password);
+        return ResponseEntity.ok(profileService.login(login, password));
+      //  profileService.login(login, password);
     }
 
 

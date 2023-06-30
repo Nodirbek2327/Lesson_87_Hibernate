@@ -7,6 +7,7 @@ import org.example.Library.service.AdminService;
 import org.example.Library.service.ProfileService;
 import org.example.Library.util.GetAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -33,14 +34,16 @@ public class AdminCategoryController {
         }
     }
 
-    private void deleteCategory() {
+    private ResponseEntity<String> deleteCategory() {
         System.out.println("Enter category id: ");
         Integer id = ComponentContainer.intScanner.nextInt();
-        adminService.deleteCategory(id);
+         return ResponseEntity.ok(adminService.deleteCategory(id));
+       // adminService.deleteCategory(id);
     }
 
-    private void categryList() {
-        profileService.categories();
+    private ResponseEntity<?> categryList() {
+        return ResponseEntity.ok(profileService.categories());
+       // profileService.categories();
     }
 
 
@@ -51,9 +54,6 @@ public class AdminCategoryController {
         System.out.println("0. Exit.");
 
     }
-
-
-
 
 
 

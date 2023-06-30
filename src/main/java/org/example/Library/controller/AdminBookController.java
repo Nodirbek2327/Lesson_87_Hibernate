@@ -10,6 +10,7 @@ import org.example.Library.service.AdminService;
 import org.example.Library.service.ProfileService;
 import org.example.Library.util.GetAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -43,27 +44,31 @@ public class AdminBookController {
         }
     }
 
-    private void bestBooks() {
-        adminService.best();
+    private ResponseEntity<?> bestBooks() {
+        return ResponseEntity.ok(adminService.best());
+      //  adminService.best();
     }
 
-    private void history() {
+    private ResponseEntity<?> history() {
         System.out.println("Enter book id: ");
         Integer id = ComponentContainer.intScanner.nextInt();
-        adminService.getHistory(id);
+        return ResponseEntity.ok(adminService.getHistory(id));
+      //  adminService.getHistory(id);
     }
 
-    private void bookOnHand() {
-        adminService.booksOnHand();
+    private ResponseEntity<?> bookOnHand() {
+        return ResponseEntity.ok(adminService.booksOnHand());
+      //  adminService.booksOnHand();
     }
 
-    private void removeBook() {
+    private ResponseEntity<String> removeBook() {
         System.out.println("Enter id: ");
         Integer id = ComponentContainer.intScanner.nextInt();
-        adminService.removeBook(id);
+        return ResponseEntity.ok( adminService.removeBook(id));
+       // adminService.removeBook(id);
     }
 
-    private void addBook() {
+    private ResponseEntity<String> addBook() {
         System.out.println("Enter title: ");
         String title = ComponentContainer.stringScanner.nextLine();
         System.out.println("Enter author: ");
@@ -83,18 +88,21 @@ public class AdminBookController {
         bookEntity.setAvailableDay(LocalDate.parse("2026-07-27"));
         bookEntity.setVisible(BookStatus.VISIBLE);
         bookEntity.setCreated_date(LocalDateTime.now());
-        adminService.addBook(bookEntity);
+        return ResponseEntity.ok(adminService.addBook(bookEntity));
+        //adminService.addBook(bookEntity);
     }
 
 
-    private void searchBook() {
+    private ResponseEntity<?> searchBook() {
         System.out.println("Enter book name: ");
         String name = ComponentContainer.stringScanner.nextLine();
-        adminService.searchByName(name);
+        return ResponseEntity.ok(adminService.searchByName(name));
+      //  adminService.searchByName(name);
     }
 
-    private void bookList() {
-        profileService.bookList();
+    private ResponseEntity<?> bookList() {
+        return  ResponseEntity.ok(profileService.bookList());
+       // profileService.bookList();
     }
 
 

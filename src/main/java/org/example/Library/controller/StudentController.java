@@ -7,6 +7,7 @@ import org.example.Library.service.AdminService;
 import org.example.Library.service.ProfileService;
 import org.example.Library.util.GetAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -40,30 +41,35 @@ public class StudentController {
 
     }
 
-    private void booksOnHand() {
-        adminService.booksOnStudent(profileEntity);
+    private ResponseEntity<?> booksOnHand() {
+        return ResponseEntity.ok(adminService.booksOnStudent(profileEntity));
+        //adminService.booksOnStudent(profileEntity);
     }
 
-    private void take() {
+    private ResponseEntity<String> take() {
         System.out.println("Enter book name to take: ");
         String name = ComponentContainer.stringScanner.nextLine();
-        adminService.takeBook(profileEntity, name);
+        return ResponseEntity.ok(adminService.takeBook(profileEntity, name));
+       // adminService.takeBook(profileEntity, name);
     }
 
-    private void returnBook() {
+    private ResponseEntity<String> returnBook() {
         System.out.println("Enter book id: ");
         Integer id = ComponentContainer.intScanner.nextInt();
-        adminService.returnBook(profileEntity, id);
+        return ResponseEntity.ok(adminService.returnBook(profileEntity, id));
+      //  adminService.returnBook(profileEntity, id);
     }
 
-    private void searchBook() {
+    private ResponseEntity<?> searchBook() {
         System.out.println("Enter something to search: ");
         String data = ComponentContainer.stringScanner.nextLine();
-        profileService.search(data);
+        return ResponseEntity.ok( profileService.search(data));
+       // profileService.search(data);
     }
 
-    private void bookList() {
-        profileService.bookList();
+    private ResponseEntity<?> bookList() {
+        return ResponseEntity.ok( profileService.bookList());
+       // profileService.bookList();
     }
 
 
@@ -78,12 +84,6 @@ public class StudentController {
         System.out.println("0. Exit.");
 
     }
-
-
-
-
-
-
 
     public void setProfileEntity(ProfileEntity profileEntity) {
         this.profileEntity=profileEntity;

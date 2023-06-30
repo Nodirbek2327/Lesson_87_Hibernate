@@ -5,6 +5,7 @@ import org.example.Library.Entity.ProfileEntity;
 import org.example.Library.enums.ProfileRoles;
 import org.example.Library.util.GetAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -36,36 +37,42 @@ public class AdminController {
         }
     }
 
-    private void profile() {
+    private ResponseEntity<?> profile() {
         if (profileEntity.getRole().equals(ProfileRoles.STAFF)){
-            System.out.println("profile is only for admin");
-            return;
+//            System.out.println("profile is only for admin");
+//            return;
+              return ResponseEntity.badRequest().body("profile is only for admin");
         }
         adminProfileController.setProfileEntity(profileEntity);
         adminProfileController.start();
-        System.out.println("Welcome admin");
+       // System.out.println("Welcome admin");
+        return ResponseEntity.ok("Welcome admin");
     }
 
-    private void student() {
+    private ResponseEntity<String> student() {
         adminStudentController.setProfileEntity(profileEntity);
         adminStudentController.start();
-        System.out.println("Welcome worker");
+        //System.out.println("Welcome worker");
+        return ResponseEntity.ok("Welcome worker");
     }
 
-    private void category() {
+    private ResponseEntity<String> category() {
         if (profileEntity.getRole().equals(ProfileRoles.STAFF)){
-            System.out.println("category is only for admin");
-            return;
+//            System.out.println("category is only for admin");
+//            return;
+            return ResponseEntity.badRequest().body("category is only for admin");
         }
         adminCategoryController.setProfileEntity(profileEntity);
         adminCategoryController.start();
-        System.out.println("Welcome admin");
+      //  System.out.println("Welcome admin");
+        return ResponseEntity.ok("Welcome admin");
     }
 
-    private void book() {
+    private ResponseEntity<String> book() {
         adminBookController.setProfileEntity(profileEntity);
         adminBookController.start();
-        System.out.println("Welcome worker");
+       // System.out.println("Welcome worker");
+        return ResponseEntity.ok("Welcome worker");
     }
 
     public void show(){

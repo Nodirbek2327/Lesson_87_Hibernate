@@ -5,12 +5,15 @@ import org.example.Library.Entity.CategoryEntity;
 import org.example.Library.Entity.ProfileEntity;
 import org.example.Library.Entity.TakenBooks;
 import org.example.Library.enums.BookStatus;
+import org.example.Library.exp.AppBadRequestException;
+import org.example.Library.exp.ItemNotFoundException;
 import org.example.Library.mapper.BestsellerMapper;
 import org.example.Library.mapper.BookMapper;
 import org.example.Library.mapper.HistoryMapper;
 import org.example.Library.mapper.ProfileMapper;
 import org.example.Library.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +26,16 @@ public class AdminService {
     @Autowired
     private AdminRepository adminRepository;
 
-    public void searchByName(String name) {
+    public List<BookMapper> searchByName(String name) {
         List<BookMapper> list = adminRepository.searchByName(name);
         if (list.isEmpty()){
-            System.out.println("There is no books like that");
-            return;
+//            System.out.println("There is no books like that");
+//            return;
+            throw new ItemNotFoundException("There is no books like that");
         }
         System.out.println("*********************** Result *********************** \n");
-        list.forEach(System.out::println);
+       // list.forEach(System.out::println);
+        return list;
     }
 
 
@@ -47,158 +52,191 @@ public class AdminService {
         return categoryEntity;
     }
 
-    public void addBook(BookEntity bookEntity) {
+    public String addBook(BookEntity bookEntity) {
         if (adminRepository.addBook(bookEntity)){
-            System.out.println("book added");
-            return;
+//            System.out.println("book added");
+//            return;
+            return "book added";
         }
-        System.out.println("book not added");
+     //   System.out.println("book not added");
+        return "book not added";
     }
 
-    public void removeBook(Integer id) {
+    public String  removeBook(Integer id) {
          if (adminRepository.removeBook(id) > 0){
-             System.out.println("deleted successfully");
-             return;
+//             System.out.println("deleted successfully");
+//             return;
+             return "deleted successfully";
          }
-         System.out.println("not deleted");
+       //  System.out.println("not deleted");
+        return "not deleted";
     }
 
-    public void booksOnHand() {
+    public List<BookMapper> booksOnHand() {
         List<BookMapper> list = adminRepository.booksOnHand();
         if (list.isEmpty()){
-            System.out.println("There is no books on hand");
-            return;
+//            System.out.println("There is no books on hand");
+//            return;
+            throw new ItemNotFoundException("There is no books on hand");
         }
         System.out.println("*********************** Books on Hand *********************** \n");
-        list.forEach(System.out::println);
+       // list.forEach(System.out::println);
+        return list;
     }
 
-    public void getHistory(Integer id) {
+    public List<HistoryMapper> getHistory(Integer id) {
         List<HistoryMapper> list = adminRepository.bookHistory(id);
         if (list.isEmpty()){
-            System.out.println("There is no books history");
-            return;
+//            System.out.println("There is no books history");
+//            return;
+            throw new ItemNotFoundException("There is no books history");
         }
         System.out.println("*********************** Books History *********************** \n");
-        list.forEach(System.out::println);
+        //list.forEach(System.out::println);
+        return list;
     }
 
-    public void best() {
+    public List<BestsellerMapper> best() {
         List<BestsellerMapper> list = adminRepository.best();
         if (list.isEmpty()){
-            System.out.println("There is no books ");
-            return;
+//            System.out.println("There is no books ");
+//            return;
+            throw new ItemNotFoundException("There is no books ");
         }
         System.out.println("*********************** Books are best taken *********************** \n");
-        list.forEach(System.out::println);
+      //  list.forEach(System.out::println);
+        return list;
     }
 
-    public void deleteCategory(Integer id) {
+    public String deleteCategory(Integer id) {
         if (adminRepository.deleteCategory(id)>0){
-            System.out.println("deleted successfully");
-            return;
+//            System.out.println("deleted successfully");
+//            return;
+            return "deleted successfully";
         }
-        System.out.println("category not found");
+       // System.out.println("category not found");
+        return "category not found";
     }
 
-    public void changeStatus(Integer id) {
+    public String changeStatus(Integer id) {
         if (adminRepository.changeProfileStatus(id)>0){
-            System.out.println("changed successfully");
-            return;
+//            System.out.println("changed successfully");
+//            return;
+            return "changed successfully";
         }
-        System.out.println("profile not found");
+       // System.out.println("profile not found");
+        throw new ItemNotFoundException("profile not found");
     }
 
-    public void searchProfile(String data) {
+    public List<ProfileMapper> searchProfile(String data) {
         List<ProfileMapper> list = adminRepository.searchProfile(data);
         if (list.isEmpty()){
-            System.out.println("There is no profile");
-            return;
+//            System.out.println("There is no profile");
+//            return;
+            throw new ItemNotFoundException("There is no profile");
         }
         System.out.println("*********************** Result *********************** \n");
-        list.forEach(System.out::println);
+       // list.forEach(System.out::println);
+        return list;
     }
 
-    public void profileList() {
+    public List<ProfileMapper> profileList() {
         List<ProfileMapper> list = adminRepository.profileList();
         if (list.isEmpty()){
-            System.out.println("There is no profile ");
-            return;
+//            System.out.println("There is no profile ");
+//            return;
+            throw new ItemNotFoundException("There is no profile ");
         }
         System.out.println("*********************** profiles *********************** \n");
-        list.forEach(System.out::println);
+       // list.forEach(System.out::println);
+        return list;
     }
 
-    public void studentList() {
+    public List<ProfileMapper> studentList() {
         List<ProfileMapper> list = adminRepository.studentList();
         if (list.isEmpty()){
-            System.out.println("There is no student ");
-            return;
+//            System.out.println("There is no student ");
+//            return;
+            throw new ItemNotFoundException("There is no student");
         }
         System.out.println("*********************** profiles *********************** \n");
-        list.forEach(System.out::println);
+       // list.forEach(System.out::println);
+        return list;
     }
 
-    public void searchStudent(String data) {
+    public List<ProfileMapper> searchStudent(String data) {
         List<ProfileMapper> list = adminRepository.searchStudent(data);
         if (list.isEmpty()){
-            System.out.println("There is no student");
-            return;
+//            System.out.println("There is no student");
+//            return;
+           throw new ItemNotFoundException("There is no student");
         }
         System.out.println("*********************** Result *********************** \n");
-        list.forEach(System.out::println);
+        //list.forEach(System.out::println);
+        return list;
     }
 
-    public void blockStudent(Integer id) {
+    public String  blockStudent(Integer id) {
         if (adminRepository.blockStudent(id)>0){
-            System.out.println("blocked successfully");
-            return;
+//            System.out.println("blocked successfully");
+//            return;
+            return "blocked successfully";
         }
-        System.out.println("student not found");
+       // System.out.println("student not found");
+        throw new ItemNotFoundException("student not found");
     }
 
-    public void activateStudent(Integer id) {
+    public String activateStudent(Integer id) {
         if (adminRepository.activateStudent(id)>0){
-            System.out.println("activate student successfully");
-            return;
+//            System.out.println("activate student successfully");
+//            return;
+            return "activate student successfully";
         }
-        System.out.println("student not found");
+        throw new ItemNotFoundException("student not found");
     }
 
-    public void takeBook(ProfileEntity profileEntity, String name) {
+    public String takeBook(ProfileEntity profileEntity, String name) {
         List<BookEntity> list = adminRepository.takeBook(profileEntity, name);
         if (list.isEmpty()){
-            System.out.println("book not found");
-            return;
+//            System.out.println("book not found");
+//            return;
+            throw new ItemNotFoundException("book not found");
         }
         if(adminRepository.addTakenBook(profileEntity, list.get(0))){
-            System.out.println("book is taken");
-            return;
+//            System.out.println("book is taken");
+//            return;
+            return "book is taken";
         };
-        System.out.println("wrong");
+       // System.out.println("wrong");
+        throw new AppBadRequestException("something wrong");
     }
 
-    public void returnBook(ProfileEntity profileEntity, Integer id) {
+    public String returnBook(ProfileEntity profileEntity, Integer id) {
         List<TakenBooks> list = adminRepository.returnBook(profileEntity, id);
         if (list.isEmpty()){
-            System.out.println("TakenBook not found");
-            return;
+//            System.out.println("TakenBook not found");
+//            return;
+            throw new ItemNotFoundException("TakenBook not found");
         }
         if(adminRepository.returnTakenBook(profileEntity, list.get(0))){
-            System.out.println("book is returned");
-            return;
+//            System.out.println("book is returned");
+//            return;
+            return "book is returned";
         };
-        System.out.println("wrong");
+        //System.out.println("wrong");
+        throw new AppBadRequestException("wrong");
     }
 
-    public void booksOnStudent(ProfileEntity profileEntity) {
+    public List<BookMapper> booksOnStudent(ProfileEntity profileEntity) {
         List<BookMapper> list = adminRepository.booksOnStudent(profileEntity);
         if (list.isEmpty()){
-            System.out.println("There is no books on your hand");
-            return;
+//            System.out.println("There is no books on your hand");
+//            return;
+            throw new ItemNotFoundException("There is no books on your hand");
         }
         System.out.println("*********************** Books on your Hand *********************** \n");
-        list.forEach(System.out::println);
+       // list.forEach(System.out::println);
+        return list;
     }
 }
 
